@@ -1,0 +1,10 @@
+ujson
+six
+cryptography
+redis
+requests
+requests-toolbelt
+requests-ntlm
+ntlm-auth
+python-dotenv
+arcgis

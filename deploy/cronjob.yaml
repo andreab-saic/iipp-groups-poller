@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: arcgis-group-poller
+  namespace: arcgis-auth
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: arcgis-poller
+              image: 422246722955.dkr.ecr.us-east-1.amazonaws.com/iipp-groups-poller:latest
+              env:
+                - name: ARCGIS_CLIENT_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: clientUrl
+                - name: ARCGIS_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: clientId
+                - name: ARCGIS_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: clientSecret
+                - name: FLASK_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: flaskKey
+                - name: ARCGIS_WEBHOOK_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: webhookSecret
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: awsAccessKeyId
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: awsSecretAccessKey
+                - name: REDIS_SERVER
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: RedisHost
+                - name: AWS_DEFAULT_REGION
+                  valueFrom:
+                    secretKeyRef:
+                      name: arcgis-secrets
+                      key: awsDefaultRegion
+                - name: AWS_REGION
+                  value: "us-east-1"
+          restartPolicy: Never
