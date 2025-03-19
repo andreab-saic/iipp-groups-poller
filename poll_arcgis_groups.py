@@ -20,7 +20,7 @@ ARCGIS_CLIENT_SECRET = get_env('ARCGIS_CLIENT_SECRET')
 REDIS_SERVER         = get_env('REDIS_SERVER')
 
 # Initialize ArcGIS GIS object
-gis = GIS(ARCGIS_CLIENT_URL, ARCGIS_CLIENT_ID, ARCGIS_CLIENT_SECRET, use_gen_token=True)
+gis = GIS(ARCGIS_CLIENT_URL, ARCGIS_CLIENT_ID, ARCGIS_CLIENT_SECRET, use_gen_token=True, verify_cert=False)
 
 # Initialize Redis client with SSL enabled
 redis_client = redis.Redis(
